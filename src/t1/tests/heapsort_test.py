@@ -5,11 +5,12 @@ import unittest
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-EXECUTABLE = RAIZ / 'bin/heapsort'
+EXECUTAVEL = RAIZ / 'bin/heapsort'
+
 
 class TestHeapsort(unittest.TestCase):
     def test_executable_exists(self):
-        self.assertEqual(os.path.exists(EXECUTABLE), True)
+        self.assertEqual(os.path.exists(EXECUTAVEL), True)
 
     def test_cases(self):
         casos = {
@@ -26,16 +27,36 @@ class TestHeapsort(unittest.TestCase):
             with self.subTest(name=name):
                 entrada = f"{len(values)}\n" + " ".join(map(str, values)) + "\n"
                 process = subprocess.run(
-                    [EXECUTABLE],
+                    [EXECUTAVEL],
                     input=entrada,
                     text=True,
                     capture_output=True,
                     check=False,
-                    timeout=5,
+                    timeout=1,
                 )
                 expected = sorted(values)
                 self.assertEqual(0, process.returncode, process.stderr)
                 self.assertListEqual(expected, list(map(int, process.stdout.split())))
+
+    def test_casos_invalidos(self):
+        casos = {
+            'array vazio': '1\n\n',
+            'tamanho vazio': '\n3 2 1\n',
+            'caractere invalido': '1\nx\n',
+            'tamanho invalido': 'A\n42 0\n',
+        }
+        for name, entrada in casos.items():
+            with self.subTest(name=name), self.assertRaises(subprocess.CalledProcessError):
+                process = subprocess.run(
+                    [EXECUTAVEL],
+                    input=entrada,
+                    text=True,
+                    capture_output=True,
+                    # raise CalledProcessError se returncode != 0
+                    check=True,
+                    timeout=1,
+                )
+                self.fail(f'code<{process.returncode}>: stdout[{process.stdout}] stderr[{process.stderr}]')
 
 
 if __name__ == '__main__':
