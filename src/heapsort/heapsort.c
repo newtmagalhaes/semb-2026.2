@@ -4,6 +4,15 @@
 /* Reserva estatica: nao ocupa a pilha e dispensa malloc. */
 static Heap area_de_trabalho;
 
+/** Heapsort
+ * @param dados array de entrada
+ * @param quantidade tamanho do array
+ * @return Retorna `true` caso operação tenha sido concluída com éxito.
+ * @note Esta operação altera o vetor de entrada, é uma operação "inplace".
+ *
+ * Utiliza uma Heap estática para inserir os elementos e depois removê-los de
+ * forma ordenada para o array
+ */
 bool heapsort_ordenar(int32_t dados[], size_t quantidade)
 {
     if (quantidade > HEAP_CAPACIDADE ||

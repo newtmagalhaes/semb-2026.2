@@ -10,6 +10,15 @@ bool heap_esta_vazia(const Heap *heap)
     return heap->tamanho == 0;
 }
 
+/** Insere elemento na Heap
+ * @param heap ponteiro para heap válida
+ * @param valor valor a ser inserido na heap
+ * @return retorna `true` caso operação tenha sido concluída com éxito.
+ * 
+ * Começa da ultima posição, checa se o pai é maior ou igual a valor, caso não: desce
+ * ele e repete o processo com a posição dele.
+ * No fim, insere valor na posição vaga.
+ */
 bool heap_inserir(Heap *heap, int32_t valor)
 {
     if (heap->tamanho == HEAP_CAPACIDADE) {
@@ -29,6 +38,17 @@ bool heap_inserir(Heap *heap, int32_t valor)
     return true;
 }
 
+/** Remove elemento da Heap
+ * @param heap ponteiro para heap válida
+ * @param maior ponteiro para variável externa que guarde o valor removido da heap
+ * @return retorna `true` caso operação tenha sido concluída com éxito.
+ * 
+ * Guarda o valor a ser removido na variável `maior`.
+ * Começando da posição inicial da heap, escolhe o maior filho para ocupar o
+ * lugar do pai removido e repete o processo para a posição vaga deixada pelo
+ * filho movido enquanto o filho for maior que o ultimo elemento, e caso não
+ * seja, o ultimo elemento toma o lugar vago do pai.
+ */
 bool heap_remover_maximo(Heap *heap, int32_t *maior)
 {
     if (heap_esta_vazia(heap)) {

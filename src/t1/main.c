@@ -1,3 +1,15 @@
+/**
+ * @file main.c
+ * 
+ * @brief Implementação do algoritmo Heaapsort
+ * 
+ * @license MIT License
+ * 
+ * @copyright Copyright (c) 2026 Anilton Magalhães de Castro, Pedro Henrique Almeida Lima
+ * 
+ * @version 1.0
+ */
+
 #include "heapsort.h"
 #include "heap.h"
 
@@ -10,7 +22,6 @@ static int32_t vetor[HEAP_CAPACIDADE];
 int main(void)
 {
     size_t quantidade;
-    // printf("Informe quantidade: ");
     if (scanf("%zu", &quantidade) != 1 || quantidade > HEAP_CAPACIDADE) {
         fputs("Erro: informe uma quantidade entre 0 e 8000.\n", stderr);
         return 1;
@@ -28,7 +39,6 @@ int main(void)
         return 1;
     }
 
-    // printf("Vetor Ordenado: ");
     for (size_t i = 0; i < quantidade; ++i) {
         printf(i == 0 ? "%" PRId32 : " %" PRId32, vetor[i]);
     }
