@@ -111,10 +111,10 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	r_status = receive_packet(&huart2, &size, (uint8_t *) data);
 	if (r_status != RECEIVE_OK) {
-		send_msg(&huart2, (uint8_t) r_status);
+		// send_msg(&huart2, (uint8_t) r_status);
 		continue;
 	}
-	if (!heapsort_ordenar(data, size)) {
+	if (!heapsort_ordenar((int16_t *)data, size)) {
 		// heapsort failed
 		send_msg(&huart2, UNKNOWN_ERROR);
 		continue;
