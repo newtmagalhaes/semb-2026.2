@@ -3,9 +3,10 @@
 #define SERIAL_CONN_H
 
 #include <stdint.h>
-#include <stm32f0xx_hal_def.h>
+#include <stddef.h>
+#include "stm32f0xx_hal.h"
 
-#define MAX_PACKET_SIZE 8000
+#define MAX_PACKET_SIZE 4000u
 #define CONN_HEADER_SIZE 2
 #define CONN_MIN_TIMEOUT 100
 #define CONN_MAX_TIMEOUT 1000

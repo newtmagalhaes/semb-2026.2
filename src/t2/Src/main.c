@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "serial_conn.h"
-#include "include/heapsort.h"
+#include "heapsort.h"
 
 /* USER CODE END Includes */
 
@@ -95,7 +95,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  uint8_t data[MAX_PACKET_SIZE];
+  uint16_t data[MAX_PACKET_SIZE];
   size_t size = 0;
   ReceiveStatus r_status;
   SendStatus s_status;
@@ -109,18 +109,18 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	r_status = receive_packet(&huart2, &size, data);
+	r_status = receive_packet(&huart2, &size, (uint8_t *) data);
 	if (r_status != RECEIVE_OK) {
 		send_msg(&huart2, (uint8_t) r_status);
 		continue;
 	}
-	if (!heapsort_ordenar((int32_t *) data, size)) {
+	if (!heapsort_ordenar(data, size)) {
 		// heapsort failed
 		send_msg(&huart2, UNKNOWN_ERROR);
 		continue;
 	}
 	// send ordered data
-	s_status = send_packet(&huart2, size, data);
+	s_status = send_packet(&huart2, size, (uint8_t *) data);
 	if (s_status != SEND_OK)
 		send_msg(&huart2, (uint8_t) s_status);
   }

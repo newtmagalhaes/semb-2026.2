@@ -9,6 +9,6 @@
  * Retorna false, sem alterar o vetor, para quantidade acima da capacidade.
  * Usa uma unica heap estatica interna; nao e reentrante.
  */
-bool heapsort_ordenar(int32_t dados[], size_t quantidade);
+bool heapsort_ordenar(int16_t dados[], size_t quantidade);
 
 #endif

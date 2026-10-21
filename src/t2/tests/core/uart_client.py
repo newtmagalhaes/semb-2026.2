@@ -1,9 +1,11 @@
 import struct
 import time
+from enum import Enum
 from logging import Logger
+from typing import Literal
 
 import serial
-from enum import Enum
+
 
 class SerialStatus(Enum):
     # unespected
@@ -21,21 +23,20 @@ class SerialStatus(Enum):
     RECEIVE_FAIL_DATA = 0x72
     RECEIVE_FAIL_END = 0x73
 
-
-class SerialCommand(Enum):
-    CMD_SORT = 0x01
-    CMD_MSG = 0x02
+CMD_SORT = 0x01
+CMD_MSG = 0x02
+type SerialCommand = Literal[0x01, 0x02]
 
 
 class ClientUART:
     def __init__(self, port: str, logger: Logger | None = None, baudrate=38400, timeout=2):
         self.serial = serial.Serial(port, baudrate, timeout=timeout)
         self.logger = logger
-        time.sleep(2) # Wait for STM32 reset if necessary
+        # time.sleep(2) # Wait for STM32 reset if necessary
 
     def log(self, message):
         if self.logger:
-            self.logger.info(message)
+            self.logger.warning(message)
 
     def format_packet_log(self, direction, cmd: SerialCommand, size, payload, checksum):
         return (f"{direction}\n"
